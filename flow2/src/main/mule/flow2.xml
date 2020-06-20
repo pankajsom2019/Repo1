@@ -11,7 +11,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 				<fixed-frequency frequency="60000"/>
 			</scheduling-strategy>
 		</scheduler>
-		<set-payload value="#[[1,2,3,4,5,6]]" doc:name="Set [1,2,3,4,5,6]" doc:id="477dd74e-7d10-430d-85fc-20d5619193e4" />
+		<set-payload value="#[[1,2,3,4,5,6,7]]" doc:name="Set [1,2,3,4,5,6]" doc:id="477dd74e-7d10-430d-85fc-20d5619193e4" />
 		<batch:job jobName="flow2Batch_Job" doc:id="fab2a27d-bf38-4e1f-9e74-1d946dd27c49" >
 			<batch:process-records >
 				<batch:step name="Batch_Step" doc:id="0c3b0069-1fd6-4200-80ea-333bee4e19d4" acceptExpression="#[(payload mod 2) == 0]">
