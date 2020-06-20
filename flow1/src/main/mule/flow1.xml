@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="18b29e87-b3f5-4052-8c7f-8aad68f252d2" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="dd8b849a-5024-46e5-8edd-a81ed6004569" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="flow1Flow" doc:id="bb8a7c2e-e021-4141-baad-4b5564a04782" >
+		<http:listener doc:name="Listener" doc:id="b4dcd9b0-9008-4753-8406-880d6f74d5d8" config-ref="HTTP_Listener_config" path="/order"/>
+		<set-payload value="#['order01']" doc:name="Set Payload" doc:id="4a42c8bc-46f5-4fe5-af4e-b45a9e502849" />
+		<set-variable value="01" doc:name="Set Variable" doc:id="324ea7dc-38ce-4eea-b8cc-cd0432fe24cd" variableName="quantity"/>
+		<flow-ref doc:name="Flow Reference" doc:id="fded45fd-50d3-433d-8d7f-18273334acf5" name="flow1Flow1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0e92265c-793a-45a4-b917-c54799a03ddc" message="#[payload] ++ '&gt;&gt;' ++ #[vars.quantity]"/>
+	</flow>
+	<flow name="flow1Flow1" doc:id="4a09b9ea-82c0-4f20-aaf9-8164a52390d7" >
+		<logger level="INFO" doc:name="Logger" doc:id="dc80b63d-5218-4209-9235-6800cc77474d" />
+	</flow>
+</mule>
