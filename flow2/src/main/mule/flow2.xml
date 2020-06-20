@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="flow2Flow" doc:id="537fb115-cf97-47d5-acaa-390a579c92e5" >
+		<scheduler doc:name="Scheduler" doc:id="096156a3-21a5-4487-b2c7-6076555257b5" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="60000"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-payload value="#[[1,2,3,4,5,6]]" doc:name="Set [1,2,3,4,5,6]" doc:id="477dd74e-7d10-430d-85fc-20d5619193e4" />
+		<batch:job jobName="flow2Batch_Job" doc:id="fab2a27d-bf38-4e1f-9e74-1d946dd27c49" >
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="0c3b0069-1fd6-4200-80ea-333bee4e19d4" acceptExpression="#[(payload mod 2) == 0]">
+					<ee:transform doc:name="Transform Message" doc:id="b32758f1-6420-46d9-a16b-2d6aeac0ebb4" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload * 10]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="a6f0d4e3-27d1-457f-9d4f-65d0f34b7d00" size="3">
+						<logger level="INFO" doc:name="Logger" doc:id="d9c095d5-e7c1-4ae8-a27c-7c73692eeb95" message="'Loger values' ++ #[payload]"/>
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+		</batch:job>
+	</flow>
+</mule>
