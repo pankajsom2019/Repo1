@@ -14,8 +14,12 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		<http:listener doc:name="Listener" doc:id="b4dcd9b0-9008-4753-8406-880d6f74d5d8" config-ref="HTTP_Listener_config" path="/order"/>
 		<set-payload value="#['order01']" doc:name="Set Payload" doc:id="4a42c8bc-46f5-4fe5-af4e-b45a9e502849" />
 		<set-variable value="01" doc:name="Set Variable" doc:id="324ea7dc-38ce-4eea-b8cc-cd0432fe24cd" variableName="quantity"/>
-		<flow-ref doc:name="Flow Reference" doc:id="fded45fd-50d3-433d-8d7f-18273334acf5" name="flow1Flow1"/>
-		<logger level="INFO" doc:name="Logger" doc:id="0e92265c-793a-45a4-b917-c54799a03ddc" message="#[payload] ++ '&gt;&gt;' ++ #[vars.quantity]"/>
+		<http:request method="POST" doc:name="Request" doc:id="e37911cf-c689-4ba6-9fb2-e94165251e61" config-ref="HTTP_Request_configuration" path="/test2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0e92265c-793a-45a4-b917-c54799a03ddc" message="#[payload] &gt;&gt; #[vars.quantity]]"/>
+	</flow>
+	<flow name="flow1Flow2" doc:id="8fbb0979-7c7f-48c5-aa3a-ac10dfef2720" >
+		<http:listener doc:name="Listener" doc:id="78f31e87-31e8-4da6-ba8c-c6dbe440e9a8" config-ref="HTTP_Listener_config" path="/test2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c00a77f0-cba7-42d1-960f-97e70fe53508" message="#[payload]"/>
 	</flow>
 	<flow name="flow1Flow1" doc:id="4a09b9ea-82c0-4f20-aaf9-8164a52390d7" >
 		<logger level="INFO" doc:name="Logger" doc:id="dc80b63d-5218-4209-9235-6800cc77474d" />
